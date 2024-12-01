@@ -1,9 +1,22 @@
 # Advent of Code 2024
 
-## Add days
+## New Day
 
-* in Folder `aoc/day<number>.py`
+* Add in Folder `aoc/day<number>.py`
 
+**Template**:
+
+```python
+from aocd import get_data, submit
+
+day = <day>
+year = 2024
+data = get_data(day=day, year=year)
+
+example_lines = data.split("\n")
+
+submit(answer, part="a", day=day, year=year)
+```
 
 ## Run Scripts
 
