@@ -14,11 +14,8 @@ reports = list(map(to_levels, reports_lines))
 # 1. all increasing / all decreasing
 # 2. 1, 2, 3 -> only acceptable steps
 
-def get_report_direction(report):
+def get_report_directions(report):
     """report direction (increasing, decreasing, unknown)
-
-    Args:
-        reports (_type_): array of numbers
     """
     directions = [] # -1 = dec, 0 = none, 1 = inc
     for i, level in enumerate(report):
@@ -34,16 +31,7 @@ def get_report_direction(report):
             directions.append(-1)
         elif next == level:
             directions.append(0)
-    allInc = all(x == 1 for x in directions)
-    allDec = all(x == -1 for x in directions)
-    # print("inc", allInc)
-    # print("dec", allDec)
-    if allInc:
-        return 1
-    elif allDec:
-        return -1
-    else:
-        return 0
+    return directions
     
 def get_report_steps(report):
     steps = []
@@ -58,10 +46,13 @@ def get_report_steps(report):
 
 
 def is_report_safe(report):
-    direction = get_report_direction(report)
+    directions = get_report_directions(report)
+    allInc = all(x == 1 for x in directions)
+    allDec = all(x == -1 for x in directions)
+    
     steps = get_report_steps(report)
     steps_within_limits = all(x >= 1 and x <= 3 for x in steps)
-    safe_direction = direction != 0
+    safe_direction = allInc or allDec
     return safe_direction and steps_within_limits
 
 safe_reports_count = 0
@@ -71,3 +62,22 @@ for report in reports:
 
 
 submit(safe_reports_count, part="a", day=day, year=year)
+
+def is_report_safe2(report):
+    directions = get_report_directions(report)
+    allInc = [x == 1 for x in directions]
+    allDec = [x == -1 for x in directions]
+    
+    steps = get_report_steps(report)
+    steps_within_limits = [x >= 1 and x <= 3 for x in steps]
+
+    print(allInc, allDec, steps_within_limits)
+
+    safe_direction = allInc or allDec
+    return safe_direction and steps_within_limits
+
+print(is_report_safe2(reports[0]))
+
+# safe_reports_count2 = 0
+# for report in reports:
+#     if is_report_safe2(report):
