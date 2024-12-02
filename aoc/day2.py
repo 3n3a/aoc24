@@ -3,6 +3,12 @@ from aocd import get_data, submit
 day = 2
 year = 2024
 data = get_data(day=day, year=year)
+# data = """7 6 4 2 1
+# 1 2 7 8 9
+# 9 7 6 2 1
+# 1 3 2 4 5
+# 8 6 4 4 1
+# 1 3 6 7 9"""
 
 def to_levels(report_line):
     levels = report_line.split(" ")
@@ -56,28 +62,19 @@ def is_report_safe(report):
     return safe_direction and steps_within_limits
 
 safe_reports_count = 0
-for report in reports:
+for i, report in enumerate(reports):
     if is_report_safe(report):
         safe_reports_count += 1
+        del reports[i]
 
 
-submit(safe_reports_count, part="a", day=day, year=year)
-
-def is_report_safe2(report):
-    directions = get_report_directions(report)
-    allInc = [x == 1 for x in directions]
-    allDec = [x == -1 for x in directions]
-    
-    steps = get_report_steps(report)
-    steps_within_limits = [x >= 1 and x <= 3 for x in steps]
-
-    print(allInc, allDec, steps_within_limits)
-
-    safe_direction = allInc or allDec
-    return safe_direction and steps_within_limits
-
-print(is_report_safe2(reports[0]))
+print("a", safe_reports_count, safe_reports_count == 2)
+#submit(safe_reports_count, part="a", day=day, year=year)
 
 # safe_reports_count2 = 0
-# for report in reports:
-#     if is_report_safe2(report):
+# for report in reports2:
+#     if is_report_safe(report):
+#         safe_reports_count2 += 1
+
+# print("b", safe_reports_count2, safe_reports_count2 == 4)
+# submit(safe_reports_count2, part="b", day=day, year=year)
