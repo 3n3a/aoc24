@@ -8,17 +8,12 @@ import re
 
 
 def part_a(data):
-
     regex = r"mul\(([0-9]+),([0-9]+)\)"
-
-    # example data
-    # test_str = "xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))"
 
     matches = re.finditer(regex, data, re.MULTILINE)
 
     mult = []
-    do_mult = True
-    for matchNum, match in enumerate(matches, start=1):
+    for match in matches:
         groups = list(match.groups())
         left = int(groups[0])
         right = int(groups[1])
@@ -35,8 +30,7 @@ def part_b(data):
 
     mult = []
     do_mult = True
-    for matchNum, match in enumerate(matches, start=1):
-        
+    for match in matches:
         # mul(1,2)
         if "mul" in str(match) and do_mult:
             groups = list(match.groups())
