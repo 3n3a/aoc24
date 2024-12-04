@@ -1,5 +1,6 @@
 from aocd import get_data, submit
 import regex as re
+import numpy as np
 
 day = 4
 year = 2024
@@ -58,3 +59,17 @@ for line in s:
 
 print(c)
 submit(c, part="a", day=day, year=year)
+
+
+### part b ###
+match_count = 0
+chars2 = np.asarray(chars)
+for i in range(chars2.shape[0]-2):
+    for j in range(chars2.shape[1]-2):
+        window = chars2[i:i+3, j:j+3]
+        d1 = to_str(window.diagonal())
+        d2 = to_str(np.fliplr(window).diagonal())
+        if (d1 == 'MAS' or d1 == 'SAM') and (d2 == 'MAS' or d2 == 'SAM'):
+            match_count += 1
+
+submit(match_count, part="b", day=day, year=year)
